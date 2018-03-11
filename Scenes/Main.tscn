@@ -1,0 +1,160 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://Textures/1x1.tex" type="Texture" id=1]
+[ext_resource path="res://Textures/kenpixel-24.fnt" type="BitmapFont" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Sprite
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	set_process(true)
+
+func _process(delta):
+	self.set_pos(get_global_mouse_pos())
+	if(self.get_pos().y > 1155):
+		pass
+	elif(self.get_pos().y < 125):
+		get_tree().change_scene(\"res://Scenes/won.tscn\")
+"
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 0.465968, 0.449269 )
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node
+
+var enemy = load(\"res://Scenes/Enemy.tscn\")
+
+var time_betwen = .001
+
+func _ready():
+	set_process(true)
+
+func _process(delta):
+	time_betwen -= delta
+	if(time_betwen < 0):
+		var node = enemy.instance()
+		node.set_pos(Vector2(rand_range(0,720), -30))
+		node.set_scale(Vector2(rand_range(1, 10), 1))
+		node.set_translate_speed(Vector2(0, rand_range(10,40)))
+		add_child(node)
+		time_betwen = .2
+	
+
+	
+"
+
+[node name="Main" type="Node"]
+
+[node name="Space" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 720.0
+margin/bottom = 125.0
+texture = ExtResource( 1 )
+modulate = Color( 0.15831, 0.250337, 0.324219, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Space"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 722.0
+margin/bottom = 125.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "THIS IS SPACE.
+You just need to get in here
+"
+align = 1
+valign = 1
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="ground" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 1155.0
+margin/right = 720.0
+margin/bottom = 1280.0
+texture = ExtResource( 1 )
+modulate = Color( 0.0923462, 0.265625, 0.0991149, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="ground"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 722.0
+margin/bottom = 125.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "THIS IS GROUND.
+Just go away from here!
+"
+align = 1
+valign = 1
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="player pixel" type="Sprite" parent="."]
+
+transform/pos = Vector2( 422.96, 125.159 )
+transform/scale = Vector2( 32, 32 )
+texture = ExtResource( 1 )
+centered = false
+script/script = SubResource( 1 )
+
+[node name="Player" type="KinematicBody2D" parent="player pixel"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0.510139, 0.51014 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player pixel/Player"]
+
+transform/pos = Vector2( 0.510139, 0.51014 )
+shape = SubResource( 3 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Spawner" type="Node" parent="."]
+
+script/script = SubResource( 2 )
+
+
