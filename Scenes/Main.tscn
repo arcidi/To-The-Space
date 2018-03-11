@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Textures/1x1.tex" type="Texture" id=1]
-[ext_resource path="res://Textures/kenpixel-24.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://Textures/1x1.png" type="Texture" id=1]
+[ext_resource path="res://Textures/kenpixel-24.font" type="BitmapFont" id=2]
 
 [sub_resource type="GDScript" id=1]
 
@@ -15,13 +15,10 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
-	if(Input.is_key_pressed(KEY_SPACE)):
-		get_tree().set_pause(true)
-		print(\"XD\")
-	self.set_pos(get_global_mouse_pos())
-	if(self.get_pos().y > 1155):
+	position = get_global_mouse_position()
+	if(position.y > 1155):
 		pass
-	elif(self.get_pos().y < 125):
+	elif(position.y < 125):
 		get_tree().change_scene(\"res://Scenes/won.tscn\")
 "
 
@@ -45,7 +42,7 @@ func _process(delta):
 	time_betwen -= delta
 	if(time_betwen < 0):
 		var node = enemy.instance()
-		node.set_pos(Vector2(rand_range(0,720), -30))
+		node.position = Vector2(rand_range(0,720), -30)
 		node.set_scale(Vector2(rand_range(1, 10), 1))
 		node.set_translate_speed(Vector2(0, rand_range(10,40)))
 		add_child(node)
@@ -57,31 +54,39 @@ func _process(delta):
 
 [node name="Main" type="Node"]
 
-[node name="Space" type="TextureFrame" parent="."]
+[node name="Space" type="TextureRect" parent="." index="0"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 720.0
-margin/bottom = 125.0
+self_modulate = Color( 0.15831, 0.250337, 0.324219, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 720.0
+margin_bottom = 125.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 texture = ExtResource( 1 )
-modulate = Color( 0.15831, 0.250337, 0.324219, 1 )
 expand = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="Space"]
+[node name="Label" type="Label" parent="Space" index="0"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 722.0
-margin/bottom = 125.0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 722.0
+margin_bottom = 125.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "THIS IS SPACE.
@@ -94,31 +99,40 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="ground" type="TextureFrame" parent="."]
+[node name="ground" type="TextureRect" parent="." index="1"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 1155.0
-margin/right = 720.0
-margin/bottom = 1280.0
+self_modulate = Color( 0.0923462, 0.265625, 0.0991149, 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1155.0
+margin_right = 720.0
+margin_bottom = 1280.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 texture = ExtResource( 1 )
-modulate = Color( 0.0923462, 0.265625, 0.0991149, 1 )
 expand = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="ground"]
+[node name="Label" type="Label" parent="ground" index="0"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 722.0
-margin/bottom = 125.0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 722.0
+margin_bottom = 125.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "THIS IS GROUND.
@@ -131,33 +145,28 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="player pixel" type="Sprite" parent="."]
+[node name="player pixel" type="Sprite" parent="." index="2"]
 
-transform/pos = Vector2( 422.96, 125.159 )
-transform/scale = Vector2( 32, 32 )
+position = Vector2( 422.96, 125.159 )
+scale = Vector2( 32, 32 )
 texture = ExtResource( 1 )
 centered = false
-script/script = SubResource( 1 )
+script = SubResource( 1 )
 
-[node name="Player" type="KinematicBody2D" parent="player pixel"]
+[node name="Player" type="KinematicBody2D" parent="player pixel" index="0"]
 
-input/pickable = false
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0.510139, 0.51014 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-collision/margin = 0.08
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player pixel/Player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player pixel/Player" index="0"]
 
-transform/pos = Vector2( 0.510139, 0.51014 )
+position = Vector2( 0.510139, 0.51014 )
 shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
 
-[node name="Spawner" type="Node" parent="."]
+[node name="Spawner" type="Node" parent="." index="3"]
 
-script/script = SubResource( 3 )
+script = SubResource( 3 )
 
 
