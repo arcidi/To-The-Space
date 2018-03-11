@@ -15,6 +15,9 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	if(Input.is_key_pressed(KEY_SPACE)):
+		get_tree().set_pause(true)
+		print(\"XD\")
 	self.set_pos(get_global_mouse_pos())
 	if(self.get_pos().y > 1155):
 		pass
@@ -22,12 +25,12 @@ func _process(delta):
 		get_tree().change_scene(\"res://Scenes/won.tscn\")
 "
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 0.465968, 0.449269 )
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 
 script/source = "extends Node
 
@@ -139,7 +142,7 @@ script/script = SubResource( 1 )
 [node name="Player" type="KinematicBody2D" parent="player pixel"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0.510139, 0.51014 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -149,12 +152,12 @@ collision/margin = 0.08
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player pixel/Player"]
 
 transform/pos = Vector2( 0.510139, 0.51014 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
 [node name="Spawner" type="Node" parent="."]
 
-script/script = SubResource( 2 )
+script/script = SubResource( 3 )
 
 
